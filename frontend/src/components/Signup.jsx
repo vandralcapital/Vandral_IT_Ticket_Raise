@@ -20,6 +20,7 @@ const Signup = () => {
   const [error, setError] = useState('');
   const [skills, setSkills] = useState([]);
   const navigate = useNavigate();
+  const API_BASE_URL = import.meta.env.VITE_API_URL;
 
   const handleSkillChange = (e) => {
     const value = e.target.value;
@@ -34,7 +35,7 @@ const Signup = () => {
     e.preventDefault();
     setError('');
     try {
-      const res = await fetch('http://localhost:5050/signup', {
+      const res = await fetch(`${API_BASE_URL}/signup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, email, password, role, skills: role === 'ithead' ? skills : [] })

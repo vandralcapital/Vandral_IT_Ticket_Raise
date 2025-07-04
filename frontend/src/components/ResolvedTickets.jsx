@@ -7,13 +7,15 @@ const ResolvedTickets = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
+  const API_BASE_URL = import.meta.env.VITE_API_URL;
+
   useEffect(() => {
     const fetchTickets = async () => {
       setLoading(true);
       setError('');
       try {
         const token = localStorage.getItem('token');
-        const res = await fetch('http://localhost:5050/tickets?status=Resolved', {
+        const res = await fetch(`${API_BASE_URL}/tickets?status=Resolved`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (!res.ok) throw new Error('Could not fetch resolved tickets');
