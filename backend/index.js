@@ -10,7 +10,7 @@ const multer = require('multer');
 const path = require('path');
 
 const app = express();
-const PORT = 5050;
+const PORT = process.env.PORT || 5050;
 
 // Middleware
 app.use(cors({ origin: 'http://localhost:5173' }));
