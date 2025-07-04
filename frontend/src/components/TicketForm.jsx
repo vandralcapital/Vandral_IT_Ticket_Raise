@@ -78,8 +78,6 @@ const skillOptions = [
 ];
 const difficultyOptions = ['Easy', 'Medium', 'Hard'];
 
-const API_BASE_URL = import.meta.env.VITE_API_URL;
-
 const TicketForm = ({ onTicketCreated }) => {
   const [ticketType, setTicketType] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
@@ -118,7 +116,7 @@ const TicketForm = ({ onTicketCreated }) => {
       return;
     }
     try {
-      const res = await fetch(`${API_BASE_URL}/tickets`, {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/tickets`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

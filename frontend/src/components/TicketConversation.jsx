@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL;
-
 const TicketConversation = ({ ticketId: propTicketId, archived }) => {
   const params = useParams();
   const ticketId = propTicketId || params.ticketId;
@@ -25,7 +23,7 @@ const TicketConversation = ({ ticketId: propTicketId, archived }) => {
       setError('');
       try {
         const token = localStorage.getItem('token');
-        const res = await fetch(`${API_BASE_URL}/tickets/${encodeURIComponent(ticketId)}/messages`, {
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/tickets/${encodeURIComponent(ticketId)}/messages`, {
           headers: { Authorization: 'Bearer ' + token }
         });
         if (!res.ok) throw new Error('Could not fetch messages');
@@ -50,7 +48,7 @@ const TicketConversation = ({ ticketId: propTicketId, archived }) => {
         const formData = new FormData();
         if (newMsg.trim()) formData.append('text', newMsg);
         formData.append('image', image);
-        res = await fetch(`${API_BASE_URL}/tickets/${encodeURIComponent(ticketId)}/messages`, {
+        res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/tickets/${encodeURIComponent(ticketId)}/messages`, {
           method: 'POST',
           headers: {
             'Authorization': 'Bearer ' + token
@@ -58,7 +56,7 @@ const TicketConversation = ({ ticketId: propTicketId, archived }) => {
           body: formData
         });
       } else {
-        res = await fetch(`${API_BASE_URL}/tickets/${encodeURIComponent(ticketId)}/messages`, {
+        res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/tickets/${encodeURIComponent(ticketId)}/messages`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -109,10 +107,10 @@ const TicketConversation = ({ ticketId: propTicketId, archived }) => {
                         {msg.text && <div className="whitespace-pre-line break-words">{msg.text}</div>}
                         {msg.imageUrl && (
                           <img
-                            src={`${API_BASE_URL}${msg.imageUrl}`}
+                            src={`${import.meta.env.VITE_BACKEND_URL}${msg.imageUrl}`}
                             alt="attachment"
                             className="mt-2 max-w-[200px] max-h-[200px] rounded-lg border cursor-pointer hover:opacity-80 transition"
-                            onClick={() => setModalImage(`${API_BASE_URL}${msg.imageUrl}`)}
+                            onClick={() => setModalImage(`${import.meta.env.VITE_BACKEND_URL}${msg.imageUrl}`)}
                           />
                         )}
                       </div>

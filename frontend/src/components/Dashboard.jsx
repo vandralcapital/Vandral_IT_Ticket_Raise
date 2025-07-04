@@ -9,7 +9,6 @@ function Dashboard() {
   const { username } = useParams();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-  const API_BASE_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -19,7 +18,7 @@ function Dashboard() {
         return;
       }
       try {
-        const res = await fetch(`${API_BASE_URL}/me`, {
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/me`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         if (!res.ok) throw new Error('Not authenticated');

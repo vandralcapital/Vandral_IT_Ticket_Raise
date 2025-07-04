@@ -242,8 +242,6 @@ const ITHeadDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  const API_BASE_URL = import.meta.env.VITE_API_URL;
-
   useEffect(() => {
     const fetchTickets = async () => {
       setLoading(true);
@@ -251,7 +249,7 @@ const ITHeadDashboard = () => {
       try {
         const token = localStorage.getItem('token');
         // Only fetch non-resolved tickets
-        const res = await fetch(`${API_BASE_URL}/tickets?status!=Resolved`, {
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/tickets?status!=Resolved`, {
           headers: { Authorization: 'Bearer ' + token }
         });
         if (!res.ok) throw new Error('Failed to fetch tickets');
@@ -320,7 +318,7 @@ const ITHeadDashboard = () => {
   // Update ticket status/expectedFix
   const handleUpdateTicket = async (ticketId, { status, expectedFix }) => {
     const token = localStorage.getItem('token');
-    await fetch(`${API_BASE_URL}/tickets/${encodeURIComponent(ticketId)}/status`, {
+    await fetch(`${import.meta.env.VITE_BACKEND_URL}/tickets/${encodeURIComponent(ticketId)}/status`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -329,7 +327,7 @@ const ITHeadDashboard = () => {
       body: JSON.stringify({ status, expectedFix })
     });
     // Refresh tickets
-    const res = await fetch(`${API_BASE_URL}/tickets`, {
+    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/tickets`, {
       headers: { Authorization: 'Bearer ' + token }
     });
     const data = await res.json();

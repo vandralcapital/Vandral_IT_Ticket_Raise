@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL;
-
 const getInitials = (name, email) => {
   if (name && name.trim()) {
     return name.split(' ').map(n => n[0]).join('').toUpperCase();
@@ -21,7 +19,7 @@ const Header = () => {
       const token = localStorage.getItem('token');
       if (!token) return;
       try {
-        const res = await fetch(`${API_BASE_URL}/me`, {
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/me`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (!res.ok) throw new Error('Not authenticated');
